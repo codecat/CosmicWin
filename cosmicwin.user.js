@@ -9,40 +9,38 @@
 // ==/UserScript==
 
 (function() {
-	// === CONFIGURATION START ===
-	var NoSideBar = false;					// Removes the left sidebar
-	var FullContent = true;					// Makes the homepage content width 100%
-	var VisitedLinks = true;				// Turns visited links into blue links
-	
-	var NoGooglePlus = true;				// Removes Google+ from the sidebar
-	var NoFacebook = true;					// Removes Facebook from the sidebar
-	var NoChannels = true;					// Removes subscribed channels from the sidebar
-	var NoTrends = true;					// Removes trends from the sidebar
-	
-	var NoRecommended = true;				// Removes recommended videos
-	var NoRecommendedChannels = true;		// Removes recommended channels from the sidebar
-	
-	var NoAggregate = true;					// Removes the "X videos more" button from videos
-	var NoLoadMore = true;					// Removes the "Load More" button from the page (recommended, it's glitchy)
-	
-	var ColumnCount = 4;					// Amount of columns
-	
-	var SmallRows = true;					// Makes rows smaller
-	var SmallRowsHeight = 65;				// The height of the rows (I suggest 65)
-	
-	var Categorize = true;					// Categorize uploaded videos on user
-	
-	var LoadAllThumbnails = true;			// Load all the thumbnails automatically (required if you have multiple columns)
-	
-	var NoFeatureLinks = true;				// Removes ?feature=X from any homepage link
-	var NoGuideBars = true;					// Removes the red/gray bars from the sidebar
-	var NoSecondUploader = true;			// Removes the uploaders name that shows up before the "X times viewed"
-	var NoAddTo = true;						// Removes the "Add To..." buttons when you hover over videos
-	
-	var CosmicDebug = false;
-	// === CONFIGURATION END ===
-	
-	
+	// Confirugation
+	var config = {
+		NoSideBar: false,				// Removes the left sidebar
+		FullContent: true,				// Makes the homepage content width 100%
+		
+		NoGooglePlus: true,				// Removes Google+ from the sidebar
+		NoFacebook: true,				// Removes Facebook from the sidebar
+		NoChannels: true,				// Removes subscribed channels from the NoSideBar
+		NoTrends: true,					// Removes trends from the sidebar
+		
+		NoRecommended: true,			// Removes recommended videos
+		NoRecommendedChannels: true,	// Removes recommended channels from the sidebar
+		
+		NoAggregate: true,				// Removes the "X videos more" button from videos
+		NoLoadMore: true,				// Removes the "Load More" button from the page (recommended, it's glitchy)
+		
+		ColumnCount: 4,					// Amount of columns
+		
+		SmallRows: true,				// Makes rows smaller
+		SmallRowsHeight: 65,			// The height of the rows (I suggest 65)
+		
+		Categorize: true,				// Categorize uploaded videos on user
+		
+		LoadAllThumbnails: true,		// Load all the thumbnails automatically (required if you have multiple columns)
+		
+		NoFeatureLinks: true,			// Removes ?feature=X from any homepage link
+		NoGuideBars: true,				// Removes the red/gray bars from the sidebar
+		NoSecondUploader: true,			// Removes the uploaders name that shows up before the "X times viewed"
+		NoAddTo: true,					// Removes the "Add To..." buttons when you hover over videos
+		
+		CosmicDebug: false				// Enables the debugger output
+	};
 	
 	// a.js, 2-12-2011, edited
 	function _$(s,url,data,callback) {
@@ -137,13 +135,13 @@
 	
 	var debugElement = null;
 	function addDebugLog(str) {
-		if(!CosmicDebug)
+		if(! config.CosmicDebug)
 			return;
 		
 		debugElement.value = str + "\n" + debugElement.value;
 	}
 	
-	if(CosmicDebug) {
+	if(config.CosmicDebug) {
 		debugElement = document.createElement("textarea");
 		debugElement.style.width = "430px";
 		debugElement.style.height = "200px";
@@ -159,7 +157,7 @@
 	var addCSS = document.createElement("style");
 	addCSS.innerHTML = "";
 	
-	if(NoSideBar) {
+	if(config.NoSideBar) {
 		addCSS.innerHTML += ".guide-container,guide-background { display:none; }";
 		addCSS.innerHTML += "#feed { margin-left:0px;width:970px; }";
 		addCSS.innerHTML += "#feed-background { left:0px;width:970px; }";
@@ -167,7 +165,7 @@
 		
 		changedFeedWidth = true;
 	}else{
-		if(NoFacebook || NoChannels) {
+		if(config.NoFacebook || config.NoChannels) {
 			var elms = _$(".guide-item-container");
 			for(i = 0; i < elms.length; i++) {
 				var elm = elms[i];
@@ -177,17 +175,17 @@
 					var elmImage = elmItem.children[0];
 					
 					if(elmImage != null) {
-						if(NoGooglePlus) {
+						if(config.NoGooglePlus) {
 							if(elmImage.className.match(/ google-plus$/))
 								elm.style.display = "none";
 						}
 						
-						if(NoFacebook) {
+						if(config.NoFacebook) {
 							if(elmImage.className.match(/ facebook$/))
 								elm.style.display = "none";
 						}
 						
-						if(NoChannels) {
+						if(config.NoChannels) {
 							if(elmImage.className.match(/ ux-thumb-profile-([0-9]+)$/))
 								elm.style.display = "none";
 						}
@@ -197,18 +195,18 @@
 		}
 	}
 	
-	if(FullContent) {
+	if(config.FullContent) {
 		addCSS.innerHTML += "#content { width:95%; }";
 		addCSS.innerHTMl += ".guide-layout-container { width:100%; }";
 		addCSS.innerHTML += "#feed { width:-moz-calc(100% - 200px) !important;width:-webkit-calc(100% - 200px) !important; }";
 		addCSS.innerHTML += "#feed-background { width:100% !important; }";
 	}
 	
-	if(VisitedLinks) {
+	if(config.VisitedLinks) {
 		addCSS.innerHTML += "a:visited { color:#00a; }";
 	}
 	
-	if(NoTrends) {
+	if(config.NoTrends) {
 		var elms = _$(".guide-section");
 		for(i = 0; i < elms.length; i++) {
 			var elmItem = elms[i].children[0].children[0];
@@ -218,12 +216,12 @@
 		}
 	}
 	
-	if(NoRecommended) {
+	if(config.NoRecommended) {
 		addCSS.innerHTML += "#video-sidebar { display:none; }";
 		if(!changedFeedWidth)
 			addCSS.innerHTML += "#feed,#feed-background { width:770px; }";
 		
-		if(NoRecommendedChannels) {
+		if(config.NoRecommendedChannels) {
 			var elms = _$(".guide-section");
 			for(i = 0; i < elms.length; i++) {
 				var elmIcon = elms[i].children[0].children[0];
@@ -234,19 +232,19 @@
 		}
 	}
 	
-	if(NoAggregate) {
+	if(config.NoAggregate) {
 		addCSS.innerHTML += ".feed-item-show-aggregate { display:none !important; }";
 	}
 	
 	var columns = [];
 	
-	addCSS.innerHTML += "." + (Categorize ? "cosmic-win-container" : "feed-item-main") + " { width:" + (100 / ColumnCount * 0.92) + "%;float:left;margin-left:10px; }";
+	addCSS.innerHTML += "." + (config.Categorize ? "cosmic-win-container" : "feed-item-main") + " { width:" + (100 / config.ColumnCount * 0.92) + "%;float:left;margin-left:10px; }";
 	addCSS.innerHTML += ".feed-load-more-container { width:100%;float:left; }";
 	
 	var feedContainer = _$(".feed-container");
 	if(feedContainer.length != undefined)
 		feedContainer = feedContainer[0];
-	for(i = 0; i < ColumnCount; i++) {
+	for(i = 0; i < config.ColumnCount; i++) {
 		var newColumn = document.createElement("div");
 		newColumn.className = "cosmic-win-container";
 		
@@ -254,28 +252,28 @@
 		columns.push([0, newColumn]);
 	}
 	
-	if(NoLoadMore) {
+	if(config.NoLoadMore) {
 		_$(".feed-load-more").style.display = "none";
 	}
 	
-	if(SmallRows) {
+	if(config.SmallRows) {
 		// Thumb
 		addCSS.innerHTML += ".video-thumb {" +
-							"	width:" + (SmallRowsHeight + 16) + "px;" +
-							"	height:" + SmallRowsHeight + "px;" +
+							"	width:" + (config.SmallRowsHeight + 16) + "px;" +
+							"	height:" + config.SmallRowsHeight + "px;" +
 							"}";
 		
 		// Thumb Image
 		addCSS.innerHTML += ".feed-item-thumb img {" +
 							"	width:auto;" +
-							"	height:" + SmallRowsHeight + "px;" +
+							"	height:" + config.SmallRowsHeight + "px;" +
 							"	top:0px;" +
 							"	left:8px;" +
 							"}";
-		//addCSS.innerHTML += ".feed-item-content { margin-right:0px !important; margin-left:84px !important; }";
+		
 		// Item Content
 		addCSS.innerHTML += ".feed-item-content {" +
-							"	margin-left:" + (SmallRowsHeight + 20) + "px !important;" +
+							"	margin-left:" + (config.SmallRowsHeight + 20) + "px !important;" +
 							"	margin-right:0px !important;" +
 							"	padding-top:0px;" +
 							"}";
@@ -287,7 +285,7 @@
 	}
 	
 	var users = [];
-	if(Categorize) {
+	if(config.Categorize) {
 		var elms = _$(".feed-item-outer");
 		for(i = 0; i < elms.length; i++) {
 			var elm = elms[i];
@@ -361,7 +359,7 @@
 		_$(".feed-page").style.display = "none";
 	}
 	
-	if(LoadAllThumbnails) {
+	if(config.LoadAllThumbnails) {
 		var elms = _$("img");
 		for(i = 0; i < elms.length; i++) {
 			var elm = elms[i];
@@ -373,22 +371,22 @@
 		}
 	}
 	
-	if(NoFeatureLinks) {
+	if(config.NoFeatureLinks) {
 		var elms = _$("a");
 		for(i = 0; i < elms.length; i++)
 			elms[i].href = elms[i].href.replace(/^(.+)(&|\?)feature=(.+)$/, "$1");
 	}
 	
-	if(NoGuideBars) {
+	if(config.NoGuideBars) {
 		addCSS.innerHTML += ".guide-item.selected,.guide-item.selected:hover { border-right:0px !important; }";
 		addCSS.innerHTML += ".guide-item:hover { border-right:0px !important; }";
 	}
 	
-	if(NoSecondUploader) {
+	if(config.NoSecondUploader) {
 		addCSS.innerHTML += ".metadata .yt-user-name { display:none; }";
 	}
 	
-	if(NoAddTo) {
+	if(config.NoAddTo) {
 		addCSS.innerHTML += ".addto-button { display:none; }";
 	}
 	
