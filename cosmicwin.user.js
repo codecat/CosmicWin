@@ -13,6 +13,7 @@
 	var config = {
 		NoSideBar: false,				// Removes the left sidebar
 		FullContent: true,				// Makes the homepage content width 100%
+		VisitedLinks: true,				// Makes visited links blue
 		
 		NoGooglePlus: true,				// Removes Google+ from the sidebar
 		NoFacebook: true,				// Removes Facebook from the sidebar
