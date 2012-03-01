@@ -257,6 +257,9 @@
 	}
 	
 	if(config.SmallRows) {
+		// Padding for each video in pixels
+		var feedItemPadding = 8;
+
 		// Thumb
 		addCSS.innerHTML += ".video-thumb {" +
 							"	width:" + (config.SmallRowsHeight + 16) + "px;" +
@@ -271,6 +274,11 @@
 							"	left:8px;" +
 							"}";
 		
+		// Main (feed) item
+		addCSS.innerHTML += ".feed-item-main {" +
+							"	padding: " + feedItemPadding + "px;" +
+							"}";
+
 		// Item Content
 		addCSS.innerHTML += ".feed-item-content {" +
 							"	margin-left:" + (config.SmallRowsHeight + 20) + "px !important;" +
@@ -282,6 +290,11 @@
 		addCSS.innerHTML += ".feed-item-visual-content h4 {" +
 							"	width:100% !important;" +
 							"}";
+
+		// Item time
+		addCSS.innerHTML += ".feed-item-time {" +
+							"	bottom:" + feedItemPadding + "px;" +
+							"}";					
 	}
 	
 	var users = [];
