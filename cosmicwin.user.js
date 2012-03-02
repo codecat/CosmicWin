@@ -45,9 +45,17 @@
 		NoAddTo: true,					// Removes the "Add To..." buttons when you hover over videos
 		
 		CosmicDebug: false				// Enables the debugger output
+	},
+	debugElement = null,
+	debugElementProperties = {
+			width: "430px",
+			height: "200px",
+			position: "fixed",
+			left: "0px",
+			bottom: "0px",
+			fontFamily: "monospace"
 	};
-	
-	var debugElement = null;
+
 	function addDebugLog(str) {
 		if(! config.CosmicDebug)
 			return;
@@ -57,12 +65,11 @@
 	
 	if(config.CosmicDebug) {
 		debugElement = document.createElement("textarea");
-		debugElement.style.width = "430px";
-		debugElement.style.height = "200px";
-		debugElement.style.position = "fixed";
-		debugElement.style.left = "0px";
-		debugElement.style.bottom = "0px";
-		debugElement.style.fontFamily = "monospace";
+		
+		for(var key in debugElementProperties) {
+			debugElement.style[key] = debugElementProperties[key];
+		}
+
 		_$("body").appendChild(debugElement);
 	}
 	
