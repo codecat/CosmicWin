@@ -54,7 +54,8 @@
 			left: "0px",
 			bottom: "0px",
 			fontFamily: "monospace"
-	};
+	},
+	addCSS = '';
 
 	function addDebugLog(str) {
 		if(! config.CosmicDebug)
@@ -75,14 +76,11 @@
 	
 	var changedFeedWidth = false;
 	
-	var addCSS = document.createElement("style");
-	addCSS.innerHTML = "";
-	
 	if(config.NoSideBar) {
-		addCSS.innerHTML += ".guide-container,guide-background { display:none; }";
-		addCSS.innerHTML += "#feed { margin-left:0px;width:970px; }";
-		addCSS.innerHTML += "#feed-background { left:0px;width:970px; }";
-		addCSS.innerHTML += ".feed-header { border-radius:4px 0px 0px 0px; }";
+		addCSS += ".guide-container,guide-background { display:none; }";
+		addCSS += "#feed { margin-left:0px;width:970px; }";
+		addCSS += "#feed-background { left:0px;width:970px; }";
+		addCSS += ".feed-header { border-radius:4px 0px 0px 0px; }";
 		
 		changedFeedWidth = true;
 	}else{
@@ -117,14 +115,14 @@
 	}
 	
 	if(config.FullContent) {
-		addCSS.innerHTML += "#content { width:95%; }";
-		addCSS.innerHTMl += ".guide-layout-container { width:100%; }";
-		addCSS.innerHTML += "#feed { width:-moz-calc(100% - 200px) !important;width:-webkit-calc(100% - 200px) !important; }";
-		addCSS.innerHTML += "#feed-background { width:100% !important; }";
+		addCSS += "#content { width:95%; }";
+		addCSS += ".guide-layout-container { width:100%; }";
+		addCSS += "#feed { width:-moz-calc(100% - 200px) !important;width:-webkit-calc(100% - 200px) !important; }";
+		addCSS += "#feed-background { width:100% !important; }";
 	}
 	
 	if(config.VisitedLinks) {
-		addCSS.innerHTML += "a:visited { color:#00a; }";
+		addCSS += "a:visited { color:#00a; }";
 	}
 	
 	if(config.NoTrends) {
@@ -138,9 +136,9 @@
 	}
 	
 	if(config.NoRecommended) {
-		addCSS.innerHTML += "#video-sidebar { display:none; }";
+		addCSS += "#video-sidebar { display:none; }";
 		if(!changedFeedWidth)
-			addCSS.innerHTML += "#feed,#feed-background { width:770px; }";
+			addCSS += "#feed,#feed-background { width:770px; }";
 		
 		if(config.NoRecommendedChannels) {
 			var elms = _$(".guide-section");
@@ -154,13 +152,13 @@
 	}
 	
 	if(config.NoAggregate) {
-		addCSS.innerHTML += ".feed-item-show-aggregate { display:none !important; }";
+		addCSS += ".feed-item-show-aggregate { display:none !important; }";
 	}
 	
 	var columns = [];
 	
-	addCSS.innerHTML += "." + (config.Categorize ? "cosmic-win-container" : "feed-item-main") + " { width:" + (100 / config.ColumnCount * 0.92) + "%;float:left;margin-left:10px; }";
-	addCSS.innerHTML += ".feed-load-more-container { width:100%;float:left; }";
+	addCSS += "." + (config.Categorize ? "cosmic-win-container" : "feed-item-main") + " { width:" + (100 / config.ColumnCount * 0.92) + "%;float:left;margin-left:10px; }";
+	addCSS += ".feed-load-more-container { width:100%;float:left; }";
 	
 	var feedContainer = _$(".feed-container");
 	if(feedContainer.length != undefined)
@@ -182,13 +180,13 @@
 		var feedItemPadding = 8;
 
 		// Thumb
-		addCSS.innerHTML += ".video-thumb {" +
+		addCSS += ".video-thumb {" +
 							"	width:" + (config.SmallRowsHeight + 16) + "px;" +
 							"	height:" + config.SmallRowsHeight + "px;" +
 							"}";
 		
 		// Thumb Image
-		addCSS.innerHTML += ".feed-item-thumb img {" +
+		addCSS += ".feed-item-thumb img {" +
 							"	width:auto;" +
 							"	height:" + config.SmallRowsHeight + "px;" +
 							"	top:0px;" +
@@ -196,24 +194,24 @@
 							"}";
 		
 		// Main (feed) item
-		addCSS.innerHTML += ".feed-item-main {" +
+		addCSS += ".feed-item-main {" +
 							"	padding: " + feedItemPadding + "px;" +
 							"}";
 
 		// Item Content
-		addCSS.innerHTML += ".feed-item-content {" +
+		addCSS += ".feed-item-content {" +
 							"	margin-left:" + (config.SmallRowsHeight + 20) + "px !important;" +
 							"	margin-right:0px !important;" +
 							"	padding-top:0px;" +
 							"}";
 		
 		// Item Title
-		addCSS.innerHTML += ".feed-item-visual-content h4 {" +
+		addCSS += ".feed-item-visual-content h4 {" +
 							"	width:100% !important;" +
 							"}";
 
 		// Item time
-		addCSS.innerHTML += ".feed-item-time {" +
+		addCSS += ".feed-item-time {" +
 							"	bottom:" + feedItemPadding + "px;" +
 							"}";					
 	}
@@ -256,10 +254,10 @@
 			}
 		}
 		
-		addCSS.innerHTML += ".feed-item-author { position:inherit !important; }";
-		addCSS.innerHTML += ".feed-item-outer { padding:0px; }";
-		addCSS.innerHTML += ".feed-item-time { top:inherit !important; bottom:0px; }";
-		addCSS.innerHTML += ".feed-item-actions-line { padding-top:10px; }";
+		addCSS += ".feed-item-author { position:inherit !important; }";
+		addCSS += ".feed-item-outer { padding:0px; }";
+		addCSS += ".feed-item-time { top:inherit !important; bottom:0px; }";
+		addCSS += ".feed-item-actions-line { padding-top:10px; }";
 		
 		for(uID in users) {
 			addDebugLog("Categorize: " + uID + " has " + users[uID].length + " videos.");
@@ -312,19 +310,20 @@
 	}
 	
 	if(config.NoGuideBars) {
-		addCSS.innerHTML += ".guide-item.selected,.guide-item.selected:hover { border-right:0px !important; }";
-		addCSS.innerHTML += ".guide-item:hover { border-right:0px !important; }";
+		addCSS += ".guide-item.selected,.guide-item.selected:hover { border-right:0px !important; }";
+		addCSS += ".guide-item:hover { border-right:0px !important; }";
 	}
 	
 	if(config.NoSecondUploader) {
-		addCSS.innerHTML += ".metadata .yt-user-name { display:none; }";
+		addCSS += ".metadata .yt-user-name { display:none; }";
 	}
 	
 	if(config.NoAddTo) {
-		addCSS.innerHTML += ".addto-button { display:none; }";
+		addCSS += ".addto-button { display:none; }";
 	}
 	
-	document.head.appendChild(addCSS);
+	// Add our custom CSS to the DOM
+	GM_addStyle(addCSS);
 	
 	addDebugLog("Script successfully started.");
 })();
