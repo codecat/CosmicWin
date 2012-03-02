@@ -13,7 +13,7 @@
 // ==/UserScript==
 
 (function() {
-	// Confirugation
+	// Configuration
 	var config = {
 		NoSideBar: false,				// Removes the left sidebar
 		FullContent: true,				// Makes the homepage content width 100%
