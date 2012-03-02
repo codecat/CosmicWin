@@ -13,7 +13,7 @@
 // ==/UserScript==
 
 (function() {
-	// Confirugation
+	// Configuration
 	var config = {
 		NoSideBar: false,				// Removes the left sidebar
 		FullContent: true,				// Makes the homepage content width 100%
@@ -46,32 +46,48 @@
 		
 		CosmicDebug: false				// Enables the debugger output
 	},
-	debugElement = null,
-	debugElementProperties = {
+
+	// Debug object
+	CosmicDebug = {
+		enabled: false,
+		
+		debugElement: null,
+		elementProperties: {
 			width: "430px",
 			height: "200px",
 			position: "fixed",
 			left: "0px",
 			bottom: "0px",
 			fontFamily: "monospace"
-	},
-	addCSS = '';
-
-	function addDebugLog(str) {
-		if(! config.CosmicDebug)
-			return;
+		},
 		
-		debugElement.value = str + "\n" + debugElement.value;
-	}
+		init: function() {
+			this.enabled = true;
+			
+			this.debugElement = document.createElement("textarea");
+			
+			for(var key in this.elementProperties) {
+				this.debugElement.style[key] = this.elementProperties[key];
+			}
+
+			_$("body").appendChild(this.debugElement);
+		},
+		log: function(str) {
+			if(this.enabled) {
+				this.debugElement.value = str + "\n" + this.debugElement.value;
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+	},
+
+	// This will contain the CSS to add to the DOM.
+	addCSS = '';
 	
 	if(config.CosmicDebug) {
-		debugElement = document.createElement("textarea");
-		
-		for(var key in debugElementProperties) {
-			debugElement.style[key] = debugElementProperties[key];
-		}
-
-		_$("body").appendChild(debugElement);
+		CosmicDebug.init();
 	}
 	
 	var changedFeedWidth = false;
@@ -237,7 +253,7 @@
 			var elmVisual = elm.children[0];
 			
 			var userName = elmOwner.innerHTML;
-			addDebugLog("'" + userName + "'");
+			CosmicDebug.log("'" + userName + "'");
 			if(users[userName] == undefined)
 				users[userName] = [elm, elmOwnerTitle];
 			else
@@ -260,7 +276,7 @@
 		addCSS += ".feed-item-actions-line { padding-top:10px; }";
 		
 		for(uID in users) {
-			addDebugLog("Categorize: " + uID + " has " + users[uID].length + " videos.");
+			CosmicDebug.log("Categorize: " + uID + " has " + users[uID].length + " videos.");
 			
 			var user = users[uID];
 			var userElm = user[0];
@@ -325,5 +341,5 @@
 	// Add our custom CSS to the DOM
 	GM_addStyle(addCSS);
 	
-	addDebugLog("Script successfully started.");
+	CosmicDebug.log("Script successfully started.");
 })();
