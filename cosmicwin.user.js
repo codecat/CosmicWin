@@ -339,7 +339,16 @@
 	}
 	
 	// Add our custom CSS to the DOM
-	GM_addStyle(addCSS);
-	
+	if(typeof GM_addStyle == 'function')
+	{
+		GM_addStyle(addCSS);
+	}
+	else
+	{
+		var customCSS = document.createElement("style");
+		customCSS.innerHTML = addCSS;
+		document.head.appendChild(customCSS);
+	}
+
 	CosmicDebug.log("Script successfully started.");
 })();
