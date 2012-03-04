@@ -70,7 +70,7 @@
 				this.debugElement.style[key] = this.elementProperties[key];
 			}
 
-			_$("body").appendChild(this.debugElement);
+			document.body.appendChild(this.debugElement);
 		},
 		log: function(str) {
 			if(this.enabled) {
@@ -101,7 +101,7 @@
 		changedFeedWidth = true;
 	}else{
 		if(config.NoFacebook || config.NoChannels) {
-			var elms = _$(".guide-item-container");
+			var elms = document.getElementsByClassName("guide-item-container");
 			for(i = 0; i < elms.length; i++) {
 				var elm = elms[i];
 				var elmItem = elm.children[0].children[0];
@@ -142,7 +142,7 @@
 	}
 	
 	if(config.NoTrends) {
-		var elms = _$(".guide-section");
+		var elms = document.getElementsByClassName("guide-section");
 		for(i = 0; i < elms.length; i++) {
 			var elmItem = elms[i].children[0].children[0];
 			
@@ -157,7 +157,7 @@
 			addCSS += "#feed,#feed-background { width:770px; }";
 		
 		if(config.NoRecommendedChannels) {
-			var elms = _$(".guide-section");
+			var elms = document.getElementsByClassName("guide-section");
 			for(i = 0; i < elms.length; i++) {
 				var elmIcon = elms[i].children[0].children[0];
 				
@@ -176,7 +176,7 @@
 	addCSS += "." + (config.Categorize ? "cosmic-win-container" : "feed-item-main") + " { width:" + (100 / config.ColumnCount * 0.92) + "%;float:left;margin-left:10px; }";
 	addCSS += ".feed-load-more-container { width:100%;float:left; }";
 	
-	var feedContainer = _$(".feed-container");
+	var feedContainer = document.getElementsByClassName("feed-container");
 	if(feedContainer.length != undefined)
 		feedContainer = feedContainer[0];
 	for(i = 0; i < config.ColumnCount; i++) {
@@ -188,7 +188,7 @@
 	}
 	
 	if(config.NoLoadMore) {
-		_$(".feed-load-more").style.display = "none";
+		document.getElementsByClassName("feed-load-more")[0].style.display = "none";
 	}
 	
 	if(config.SmallRows) {
@@ -234,7 +234,7 @@
 	
 	var users = [];
 	if(config.Categorize) {
-		var elms = _$(".feed-item-outer");
+		var elms = document.getElementsByClassName("feed-item-outer");
 		for(i = 0; i < elms.length; i++) {
 			var elm = elms[i];
 			
@@ -304,11 +304,11 @@
 			addToColumn[0] += user.length;
 		}
 		
-		_$(".feed-page").style.display = "none";
+		document.getElementsByClassName('feed-page')[0].style.display = "none";
 	}
 	
 	if(config.LoadAllThumbnails) {
-		var elms = _$("img");
+		var elms = document.getElementsByTagName('img');
 		for(i = 0; i < elms.length; i++) {
 			var elm = elms[i];
 			var newURL = elm.getAttribute("data-thumb");
@@ -320,7 +320,7 @@
 	}
 	
 	if(config.NoFeatureLinks) {
-		var elms = _$("a");
+		var elms = document.getElementsByTagName('a');
 		for(i = 0; i < elms.length; i++)
 			elms[i].href = elms[i].href.replace(/^(.+)(&|\?)feature=(.+)$/, "$1");
 	}
