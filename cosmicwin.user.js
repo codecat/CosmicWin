@@ -241,19 +241,19 @@
 			if(elm.parentNode.className == "")
 				continue;
 			
-			var elmOwnerTitle;
-			var elmOwner;
-			if(elm.children[0].children[2].children.length == 3) {
-				elmOwner = elm.children[0].children[2].children[2].children[1].children[0];
-				elmOwnerTitle = elm.children[0].children[2].children[2];
-			} else {
-				elmOwner = elm.children[0].children[2].children[3].children[1].children[0];
-				elmOwnerTitle = elm.children[0].children[2].children[3];
-			}
-			var elmVisual = elm.children[0];
+			var elmOwnerTitle = null,
+				elmOwner = elm.getElementsByClassName('yt-user-name')[0];
 			
-			var userName = elmOwner.innerHTML;
+			if(!elmOwner)
+				elmOwner = null;
+			
+			elmOwnerTitle = elm.getElementsByClassName('feed-item-actions-line')[0];
+			
+			var elmVisual = elm.children[0],
+				userName = elmOwner.textContent;
+				
 			CosmicDebug.log("'" + userName + "'");
+			
 			if(users[userName] == undefined)
 				users[userName] = [elm, elmOwnerTitle];
 			else
