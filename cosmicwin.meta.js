@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           CosmicWin
-// @version        1.02
+// @version        1.03
 // @namespace      CosmicWin
 // @description    Makes the new YouTube homepage better.
 // @match          https://*.youtube.com/

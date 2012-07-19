@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           CosmicWin
-// @version        1.02
+// @version        1.03
 // @namespace      CosmicWin
 // @description    Makes the new YouTube homepage better.
 // @match          https://*.youtube.com/
@@ -186,9 +186,10 @@
 		columns.push([0, newColumn]);
 	}
 	
-	if(config.NoLoadMore) {
+	// YouTube removed this button on July 19th 2012.
+	/*if(config.NoLoadMore) {
 		document.getElementsByClassName("feed-load-more")[0].style.display = "none";
-	}
+	}*/
 	
 	if(config.SmallRows) {
 		// Padding for each video in pixels
